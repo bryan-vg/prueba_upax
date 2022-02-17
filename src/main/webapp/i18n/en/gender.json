@@ -1,0 +1,25 @@
+{
+  "pruebaupaxApp": {
+    "gender": {
+      "home": {
+        "title": "Genders",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Gender",
+        "createOrEditLabel": "Create or edit a Gender",
+        "notFound": "No Genders found"
+      },
+      "created": "A new Gender is created with identifier {{ param }}",
+      "updated": "A Gender is updated with identifier {{ param }}",
+      "deleted": "A Gender is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Gender {{ id }}?"
+      },
+      "detail": {
+        "title": "Gender"
+      },
+      "id": "ID",
+      "name": "Name",
+      "employee": "Employee"
+    }
+  }
+}

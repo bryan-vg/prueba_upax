@@ -1,0 +1,40 @@
+entity EmployeeWorkedHours(EMPLOYEE_WORKED_HOURS) {
+	workedHours Integer,
+    workedDate LocalDate
+}
+
+entity Employee(EMPLOYEES) {
+    name String,
+	lastName String,
+	birthDate LocalDate
+}
+
+entity Job(JOBS) {
+	name String,
+	salary BigDecimal
+}
+
+entity Gender(GENDERS) {
+	name String
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+    Job to Employee{job}
+    Employee to EmployeeWorkedHours{employee},
+    Gender to Employee{gender}
+}
+
+// Set pagination options
+//paginate JobHistory, Employees with infinite-scroll
+//paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceClass
+//service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

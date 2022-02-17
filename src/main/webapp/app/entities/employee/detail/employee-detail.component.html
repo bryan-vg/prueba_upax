@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employee">
+      <h2 data-cy="employeeDetailsHeading"><span jhiTranslate="pruebaupaxApp.employee.detail.title">Employee</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ employee.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="pruebaupaxApp.employee.name">Name</span></dt>
+        <dd>
+          <span>{{ employee.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="pruebaupaxApp.employee.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ employee.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="pruebaupaxApp.employee.birthDate">Birth Date</span></dt>
+        <dd>
+          <span>{{ employee.birthDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="pruebaupaxApp.employee.job">Job</span></dt>
+        <dd>
+          <div *ngIf="employee.job">
+            <a [routerLink]="['/job', employee.job?.id, 'view']">{{ employee.job?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="pruebaupaxApp.employee.gender">Gender</span></dt>
+        <dd>
+          <div *ngIf="employee.gender">
+            <a [routerLink]="['/gender', employee.gender?.id, 'view']">{{ employee.gender?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee', employee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

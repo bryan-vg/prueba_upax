@@ -1,0 +1,26 @@
+{
+  "pruebaupaxApp": {
+    "employeeWorkedHours": {
+      "home": {
+        "title": "Employee Worked Hours",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Employee Worked Hours",
+        "createOrEditLabel": "Crear o editar Employee Worked Hours",
+        "notFound": "Ningún Employee Worked Hours encontrado"
+      },
+      "created": "Un nuevo Employee Worked Hours ha sido creado con el identificador {{ param }}",
+      "updated": "Un Employee Worked Hours ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Employee Worked Hours ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Employee Worked Hours {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee Worked Hours"
+      },
+      "id": "ID",
+      "workedHours": "Worked Hours",
+      "workedDate": "Worked Date",
+      "employee": "Employee"
+    }
+  }
+}

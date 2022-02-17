@@ -1,0 +1,86 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeWorkedHoursHeading">
+    <span jhiTranslate="pruebaupaxApp.employeeWorkedHours.home.title">Employee Worked Hours</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="pruebaupaxApp.employeeWorkedHours.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee-worked-hours"
+        [routerLink]="['/employee-worked-hours/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="pruebaupaxApp.employeeWorkedHours.home.createLabel"> Create a new Employee Worked Hours </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employeeWorkedHours?.length === 0">
+    <span jhiTranslate="pruebaupaxApp.employeeWorkedHours.home.notFound">No employeeWorkedHours found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employeeWorkedHours && employeeWorkedHours.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="pruebaupaxApp.employeeWorkedHours.workedHours">Worked Hours</span></th>
+          <th scope="col"><span jhiTranslate="pruebaupaxApp.employeeWorkedHours.workedDate">Worked Date</span></th>
+          <th scope="col"><span jhiTranslate="pruebaupaxApp.employeeWorkedHours.employee">Employee</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employeeWorkedHours of employeeWorkedHours; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee-worked-hours', employeeWorkedHours.id, 'view']">{{ employeeWorkedHours.id }}</a>
+          </td>
+          <td>{{ employeeWorkedHours.workedHours }}</td>
+          <td>{{ employeeWorkedHours.workedDate | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="employeeWorkedHours.employee">
+              <a [routerLink]="['/employee', employeeWorkedHours.employee?.id, 'view']">{{ employeeWorkedHours.employee?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee-worked-hours', employeeWorkedHours.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee-worked-hours', employeeWorkedHours.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employeeWorkedHours)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

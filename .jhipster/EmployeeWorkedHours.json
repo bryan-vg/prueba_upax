@@ -1,0 +1,31 @@
+{
+  "name": "EmployeeWorkedHours",
+  "fields": [
+    {
+      "fieldName": "workedHours",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "workedDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "employeeWorkedHours",
+      "relationshipName": "employee"
+    }
+  ],
+  "entityTableName": "employee_worked_hours",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220217182303"
+}
