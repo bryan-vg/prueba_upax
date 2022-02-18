@@ -3,15 +3,16 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.domain.EmployeeWorkedHours;
 import com.mycompany.myapp.repository.EmployeeWorkedHoursRepository;
 import com.mycompany.myapp.service.EmployeeWorkedHoursService;
+import com.mycompany.myapp.service.dto.HorasTrabajadasEmpleadoDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.web.rest.errors.ExceptionApi;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -32,7 +33,6 @@ public class EmployeeWorkedHoursResource {
     private String applicationName;
 
     private final EmployeeWorkedHoursService employeeWorkedHoursService;
-
     private final EmployeeWorkedHoursRepository employeeWorkedHoursRepository;
 
     public EmployeeWorkedHoursResource(
@@ -41,6 +41,25 @@ public class EmployeeWorkedHoursResource {
     ) {
         this.employeeWorkedHoursService = employeeWorkedHoursService;
         this.employeeWorkedHoursRepository = employeeWorkedHoursRepository;
+    }
+
+    @PostMapping("/agregar-horas-trabajadas/empleado")
+    public ResponseEntity<?> agregarHorasTrabajadasPorEmpleado(@RequestBody HorasTrabajadasEmpleadoDTO horasTrabajadas) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result = this.employeeWorkedHoursService.agregarHorasTrabajadasPorEmpleado(horasTrabajadas);
+            return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        } catch (ExceptionApi e) {
+            result.put("id", null);
+            result.put("success", false);
+            log.error(e.getMensaje(), e);
+            return new ResponseEntity<>(result.toString(), e.getHttpStatus());
+        } catch (Exception e) {
+            result.put("id", null);
+            result.put("success", false);
+            log.error("Ocurrio un error al registrar las horas trabajadas del empleado", e);
+            return new ResponseEntity<>(result.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

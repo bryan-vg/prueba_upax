@@ -3,15 +3,18 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.domain.Employee;
 import com.mycompany.myapp.repository.EmployeeRepository;
 import com.mycompany.myapp.service.EmployeeService;
+import com.mycompany.myapp.service.dto.EmpleadoDTO;
+import com.mycompany.myapp.service.dto.FiltroHorasEmpleadoDTO;
+import com.mycompany.myapp.service.dto.PuestoTrabajoDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.web.rest.errors.ExceptionApi;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -38,6 +41,83 @@ public class EmployeeResource {
     public EmployeeResource(EmployeeService employeeService, EmployeeRepository employeeRepository) {
         this.employeeService = employeeService;
         this.employeeRepository = employeeRepository;
+    }
+
+    @PostMapping("/nuevo-empleado")
+    public ResponseEntity<?> agregarNuevoEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result = this.employeeService.agregarNuevoEmpleado(empleadoDTO);
+            return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        } catch (ExceptionApi e) {
+            result.put("id", null);
+            result.put("success", false);
+            //result.put("mensaje", e.getMensaje());
+            log.error(e.getMensaje(), e);
+            return new ResponseEntity<>(result.toString(), e.getHttpStatus());
+        } catch (Exception e) {
+            result.put("id", null);
+            result.put("success", false);
+            log.error("Ocurrio un error al insertar el empleado", e);
+            return new ResponseEntity<>(result.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/obtener-empleados-por-puesto")
+    public ResponseEntity<?> obtenerEmpleadosPorPuesto(@RequestBody PuestoTrabajoDTO puesto) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result = this.employeeService.obtenerEmpleadosPorPuesto(puesto);
+            return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        } catch (ExceptionApi e) {
+            result.put("employees", null);
+            result.put("success", false);
+            log.error(e.getMensaje(), e);
+            return new ResponseEntity<>(result.toString(), e.getHttpStatus());
+        } catch (Exception e) {
+            result.put("employees", null);
+            result.put("success", false);
+            log.error("Ocurrio un error al buscar los empleados por puesto", e);
+            return new ResponseEntity<>(result.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/total-horas-trabajadas-empleado/por-fechas")
+    public ResponseEntity<?> obtenerHorasTrabajadasPorFechas(@RequestBody FiltroHorasEmpleadoDTO filtroHoras) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result = this.employeeService.obtenerHorasTrabajadasPorFechas(filtroHoras);
+            return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        } catch (ExceptionApi e) {
+            result.put("total_worked_hours", null);
+            result.put("success", false);
+            log.error(e.getMensaje(), e);
+            return new ResponseEntity<>(result.toString(), e.getHttpStatus());
+        } catch (Exception e) {
+            result.put("total_worked_hours", null);
+            result.put("success", false);
+            log.error("Ocurrio un error al buscar las horas trabajadas por fecha", e);
+            return new ResponseEntity<>(result.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/total-pago-empleado/por-fechas")
+    public ResponseEntity<?> obtenerPagoEmpleadoPorFechas(@RequestBody FiltroHorasEmpleadoDTO filtroHoras) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result = this.employeeService.obtenerPagoEmpleadoPorFechas(filtroHoras);
+            return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+        } catch (ExceptionApi e) {
+            result.put("payment", null);
+            result.put("success", false);
+            log.error(e.getMensaje(), e);
+            return new ResponseEntity<>(result.toString(), e.getHttpStatus());
+        } catch (Exception e) {
+            result.put("payment", null);
+            result.put("success", false);
+            log.error("Ocurrio un error al buscar el pago total por fecha", e);
+            return new ResponseEntity<>(result.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
