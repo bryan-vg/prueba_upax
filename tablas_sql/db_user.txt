@@ -1,0 +1,3 @@
+nombre db: upaxdb
+username: miuser
+password: mipass
